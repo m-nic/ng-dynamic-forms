@@ -9,8 +9,9 @@ export class DynamicFormControl extends FormControl {
     public static readonly TYPE_TEXT = 'text';
     public static readonly TYPE_PASSWORD = 'password';
     public static readonly TYPE_CHECKBOX = 'checkbox';
+    public static readonly TYPE_SLIDER = 'slider_checkbox';
 
-    public textMask: (string | RegExp)[];
+    public textMask: (string | RegExp)[] = [];
     public groupWrap: boolean;
     public controlType: string = DynamicFormControl.TYPE_TEXT;
 
@@ -22,9 +23,9 @@ export class DynamicFormControl extends FormControl {
     public dividerTopCssClass: string = '';
     public dividerBottomCssClass: string = '';
 
-    public formGroupCssClass: string = '';
-    public labelCssClass: string = 'col-xs-12';
-    public controlCssClass: string = 'col-xs-12';
+    public formGroupCssClass: string;
+    public labelCssClass: string;
+    public controlCssClass: string;
 
     public isRemovable;
 
@@ -93,8 +94,9 @@ export class DynamicFormControl extends FormControl {
         return this;
     }
 
-    setPlaceHolder(placeholder: string) {
+    setPlaceholder(placeholder: string) {
         this.placeholder = placeholder;
+        return this;
     }
 
     setEnableTextToggle() {
@@ -102,12 +104,23 @@ export class DynamicFormControl extends FormControl {
         return this;
     }
 
-    setDividerTop(cssClass: string) {
+    setDividerTop(cssClass?: string) {
+        if (!cssClass) {
+            cssClass = 'col-xs-12';
+        }
         this.dividerTopCssClass = cssClass;
+
+        return this;
+
     }
 
-    setDividerBottom(cssClass: string) {
+    setDividerBottom(cssClass?: string) {
+        if (!cssClass) {
+            cssClass = 'col-xs-12';
+        }
         this.dividerBottomCssClass = cssClass;
+
+        return this;
     }
 
     setRenderer(renderer: any) {

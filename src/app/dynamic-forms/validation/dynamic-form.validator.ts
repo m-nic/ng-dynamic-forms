@@ -75,6 +75,7 @@ export class DynamicFormValidator {
     static FieldMatch(field1, field2, message = '') {
 
         return (AC: AbstractControl) => {
+
             let field1Control = AC.get(field1) as DynamicFormControl;
             let field2Control = AC.get(field2) as DynamicFormControl;
 

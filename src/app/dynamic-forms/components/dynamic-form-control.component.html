@@ -9,7 +9,14 @@
         </ng-container>
 
         <ng-container *ngIf="!hasRenderer()">
-            <dynamic-element [fg]="fg" [control]="control"></dynamic-element>
+
+            <label *ngIf="control.label" [attr.for]="control.id" class="control-label {{ control.labelCssClass }}">
+                {{ control.label }}
+            </label>
+
+            <div class="{{ control.controlCssClass }}">
+                <dynamic-element [fg]="fg" [control]="control"></dynamic-element>
+            </div>
 
             <div class="errorMessage">
                 <dynamic-form-validation [control]="control"></dynamic-form-validation>
