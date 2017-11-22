@@ -13,6 +13,11 @@ export class DynamicFormValidator {
                 'minlength': 'You need to enter more than %s characters'
                     .replace('%s', error['requiredLength']),
 
+                'maxlength': 'You need to enter less than %s characters'
+                    .replace('%s', error['requiredLength']),
+
+                'min': 'The minimum value is %s'.replace('%s', error.min),
+                'max': 'The maximum value is %s'.replace('%s', error.max),
                 'invalidIPv4': 'You must enter a valid IPv4',
                 'invalidIPv4Range': 'You must enter a valid IPv4 range',
                 'invalidHostname': 'Hostname is invalid',

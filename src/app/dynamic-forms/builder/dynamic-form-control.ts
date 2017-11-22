@@ -6,10 +6,13 @@ export class DynamicFormControl extends FormControl {
 
     public static readonly DEFAULT_DEBOUNCE = 200;
 
+    public static readonly TYPE_HIDDEN = 'hidden';
     public static readonly TYPE_TEXT = 'text';
     public static readonly TYPE_PASSWORD = 'password';
     public static readonly TYPE_CHECKBOX = 'checkbox';
     public static readonly TYPE_SLIDER = 'slider_checkbox';
+    public static readonly TYPE_TEXTAREA = 'textarea';
+    public static readonly TYPE_FILE = 'file';
 
     public textMask: (string | RegExp)[] = [];
     public groupWrap: boolean;
@@ -29,8 +32,12 @@ export class DynamicFormControl extends FormControl {
 
     public isRemovable;
 
+    public viewInfo = {};
+
     private debounceTime: number = DynamicFormControl.DEFAULT_DEBOUNCE;
     private onChangeHandler: Function = null;
+
+    public visibleIf = () => true;
 
     constructor(
         public id?: string,
@@ -45,7 +52,7 @@ export class DynamicFormControl extends FormControl {
             .debounceTime(DynamicFormControl.DEFAULT_DEBOUNCE)
             .subscribe((value: any) => {
                 if (this.onChangeHandler instanceof Function) {
-                    this.onChangeHandler(value);
+                    this.onChangeHandler(value, this, this.parent);
                 }
             });
     }
@@ -135,6 +142,26 @@ export class DynamicFormControl extends FormControl {
 
     setValidators(newValidator: ValidatorFn | ValidatorFn[] | null){
         super.setValidators(newValidator);
+        return this;
+    }
+
+    setValue(value: any, options?: {
+        onlySelf?: boolean;
+        emitEvent?: boolean;
+        emitModelToViewChange?: boolean;
+        emitViewToModelChange?: boolean;
+    }) {
+        super.setValue(value, options);
+        return this;
+    }
+
+    addViewInfo(viewInfo) {
+        this.viewInfo = Object.assign(this.viewInfo, viewInfo);
+        return this;
+    }
+
+    setVisibleIf(visibleIf = () => true) {
+        this.visibleIf = visibleIf;
         return this;
     }
 }

@@ -1,12 +1,15 @@
 <ng-container [formGroup]="fg">
     <ng-container [ngSwitch]="control.controlType">
 
+        <ng-container *ngSwitchCase="'hidden'">
+            <input type="hidden" [formControlName]="control.id" [name]="control.id">
+        </ng-container>
         <ng-container *ngSwitchCase="'text'">
 
             <div class="input-group input-group-sm">
 
-                <input class="form-control input-sm" [formControlName]="control.id" [placeholder]="control.placeholder"
-                       [id]="control.id" type="text" [textMask]="control.textMask">
+                <input class="form-control input-sm {{ control.id }}" [formControlName]="control.id" [placeholder]="control.placeholder"
+                       type="text" [textMask]="control.textMask" autocomplete="donttouchme" name="psk">
 
                 <span class="input-group-btn" *ngIf="control.isRemovable">
                         <span class="btn btn-default" (click)="removeControl()">
@@ -23,8 +26,8 @@
 
         <ng-container *ngSwitchCase="'password'">
 
-            <input class="form-control input-sm" [formControlName]="control.id" [placeholder]="control.placeholder"
-                   [id]="control.id" type="password" [textMask]="control.textMask">
+            <input class="form-control input-sm {{ control.id }}" [formControlName]="control.id" [placeholder]="control.placeholder"
+                   type="password" [textMask]="control.textMask" autocomplete="donttouchme" name="psk">
 
             <span *ngIf="control.enableTextToggle" class="show-password" (click)="switchToText()">
                     <i class="glyphicon glyphicon-eye-open"></i>
@@ -33,18 +36,50 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="'checkbox'">
-            <input class="checkbox" [formControlName]="control.id"
-                   [id]="control.id" type="checkbox">
+            <input class="checkbox {{ control.id }}" [formControlName]="control.id"
+                   type="checkbox">
         </ng-container>
 
 
         <ng-container *ngSwitchCase="'slider_checkbox'">
             <label class="switch">
-                <input class="checkbox" [formControlName]="control.id"
-                       [id]="control.id" type="checkbox">
+                <input class="checkbox {{ control.id }}" [formControlName]="control.id" type="checkbox">
                 <span class="slider round"></span>
             </label>
-
         </ng-container>
+
+        <ng-container *ngSwitchCase="'textarea'">
+
+            <textarea class="form-control input-sm {{ control.id }}" [ngClass]="{ 'textarea-removable': control.isRemovable }"
+                      [formControlName]="control.id" [placeholder]="control.placeholder">
+            </textarea>
+
+            <div class="text-right textarea-remove-btn" *ngIf="control.isRemovable">
+                <a (click)="removeControl()">
+                    Remove
+                </a>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'file'">
+            <div class="btn btn-default" (click)="uploadBtn.click()">
+                <i class="fa fa-upload"></i> Choose file
+                <input type="hidden" [formControlName]="control.id" [name]="control.id">
+
+                <input (change)="uploadFile(uploadBtn)" #uploadBtn class="hidden" type="file">
+            </div>
+            <br>
+            <br>
+            <div>
+                <ng-container *ngIf="!uploadBtn.value">
+                    No file chosen
+                </ng-container>
+
+                <ng-container *ngIf="uploadBtn.value">
+                    File: {{ uploadBtn.files[0].name }}
+                </ng-container>
+            </div>
+        </ng-container>
+
     </ng-container>
 </ng-container>

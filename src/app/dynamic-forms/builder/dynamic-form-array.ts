@@ -32,8 +32,11 @@ export class DynamicFormArray extends FormArray {
     patchValue(value: any, options?: Object) {
 
         if (this.elementGenerate) {
+            this.controls = [];
             for (let i in value) {
-                this.addElement(Object.create(this.elementGenerate));
+                if (value.hasOwnProperty(i)) {
+                    this.addElement(Object.create(this.elementGenerate));
+                }
             }
         }
 
@@ -98,4 +101,13 @@ export class DynamicFormArray extends FormArray {
         return this;
     }
 
+    setValue(value: any, options?: {
+        onlySelf?: boolean;
+        emitEvent?: boolean;
+        emitModelToViewChange?: boolean;
+        emitViewToModelChange?: boolean;
+    }) {
+        super.setValue(value, options);
+        return this;
+    }
 }

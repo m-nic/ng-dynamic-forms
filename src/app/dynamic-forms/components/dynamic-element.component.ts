@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DynamicFormControl } from '../builder/dynamic-form-control';
 import { DynamicElementRendererBase } from './render/dynamic-element-renderer.base';
 import { DynamicFormArray } from '../builder/dynamic-form-array';
@@ -11,24 +11,37 @@ import { DynamicFormGroup } from '../builder/dynamic-form-group';
     styleUrls: [
         './dynamic-element.component.scss'
     ],
-    encapsulation: ViewEncapsulation.None
 })
 export class DynamicElementComponent extends DynamicElementRendererBase {
     @Input() fg: ( DynamicFormGroup | DynamicFormArray );
     @Input() control: DynamicFormControl;
 
-    constructor(public dynamicFormService: DynamicFormService) {
+    constructor(
+        public dynamicFormService: DynamicFormService
+    ) {
         super();
     }
 
-    private removeControl() {
+    removeControl() {
         if (this.fg instanceof DynamicFormArray) {
             this.fg.removeAt(this.fg.controls.indexOf(this.control));
-            this.dynamicFormService.removeElementRefference(this.control);
+            this.dynamicFormService.removeElementReference(this.control);
 
         } else if (this.fg instanceof DynamicFormGroup && this.control.groupWrap) {
             let formArray = (this.fg.parent as DynamicFormArray);
             formArray.removeAt(formArray.controls.indexOf(this.fg));
+        }
+    }
+
+    uploadFile(element: any) {
+
+        let reader = new FileReader();
+        if (element.files && element.files.length > 0) {
+            let file = element.files[0];
+            reader.readAsBinaryString(file);
+            reader.onload = () => {
+                this.control.setValue(reader.result);
+            };
         }
     }
 

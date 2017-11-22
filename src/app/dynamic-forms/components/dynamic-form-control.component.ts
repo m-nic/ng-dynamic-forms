@@ -12,6 +12,11 @@ import { DynamicFormGroup } from '../builder/dynamic-form-group';
                 height: 60px;
                 margin-bottom: 0;
             }
+            
+            .divider hr {
+                margin-bottom: 30px;
+                margin-top: 0;
+            }
         `
     ]
 })

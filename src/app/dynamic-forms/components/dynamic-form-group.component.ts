@@ -31,12 +31,14 @@ export class DynamicFormGroupComponent {
         return false;
     }
 
-    private getControls(group) {
+    getControls(group) {
         let controls = [];
 
         if (group.controls) {
             for (let i in group.controls) {
-                controls.push(group.controls[i]);
+                if (group.controls.hasOwnProperty(i)) {
+                    controls.push(group.controls[i]);
+                }
             }
         }
 
