@@ -4,23 +4,8 @@ This project was started due to the need of easily generating forms in a dynamic
 It' still under active development and will be soon published on npm
 
 # Instalation
-    # clone this repo
-    git clone https://github.com/m-nic/ng-dynamic-forms
+    npm i --save ngx-dynamic-forms
     
-    # install dependencies
-    npm i
-    
-    # pack the module
-    npm run packagr
-    
-    cd dist
-    
-    # use npm pack
-    npm pack
-
-The final command will output a `.tgz` file. In order to install it into your project use
-npm i `path/to/the/built-module` 
-
 ## How to use
  Add `DynamicFormModule` in the imports metadata of your ngModule
 
