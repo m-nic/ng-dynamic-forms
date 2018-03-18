@@ -1,1 +1,1 @@
-export * from './src/app/dynamic-forms/dynamic-form.module';
+export * from './src/dynamic-forms';

@@ -1,28 +1,133 @@
 # DynamicFroms
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.1.
+This project was started due to the need of easily generating forms in a dynamic way.
+It' still under active development and will be soon published on npm
 
-## Development server
+# Instalation
+    # clone this repo
+    git clone https://github.com/m-nic/ng-dynamic-forms
+    
+    # install dependencies
+    npm i
+    
+    # pack the module
+    npm run packagr
+    
+    cd dist
+    
+    # use npm pack
+    npm pack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The final command will output a `.tgz` file. In order to install it into your project use
+npm i `path/to/the/built-module` 
 
-## Code scaffolding
+## How to use
+ Add `DynamicFormModule` in the imports metadata of your ngModule
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ Use this in your component template:
+ `<dynamic-form [fg]="fg" [onSuccessSubmit]="testSubmit"></dynamic-form>`
+ 
+ In your component `.ts` describe your form using this module's API.
+ 
+            this.fg = new DynamicFormGroup().elements([
+                new DynamicFormGroup('test')
+                    .elements([
+    
+                        new DynamicFormControl('domain', 'Domain')
+                            .setControlType(DynamicFormControl.TYPE_PASSWORD)
+                            .setEnableTextToggle()
+                        ,
+    
+                        new DynamicFormGroup('admin')
+                            .setGroupCssClass('col-xs-12')
+                            .elements([
+                                new DynamicFormControl('username', 'Username')
+                                    .setLabelCssClass('col-xs-12 col-sm-5')
+                                    .setControlCssClass('col-xs-12 col-sm-7')
+                                    .onChange((value: any) => {
+                                        console.log(value);
+                                    })
+                                    .setValidators([Validators.required, DynamicFormValidator.hostnameValidator])
+                                ,
+    
+                                new DynamicFormControl('password', 'Password')
+                                    .setLabelCssClass('col-xs-12 col-sm-5')
+                                    .setControlCssClass('col-xs-12 col-sm-7')
+                                    .setValidators([Validators.required])
+                                    .onChange((value: any) => {
+                                        console.log(value);
+                                    }),
+    
+                                new DynamicFormControl('confirm_password', 'Confirm Password')
+                                    .setLabelCssClass('col-xs-12 col-sm-5')
+                                    .setControlCssClass('col-xs-12 col-sm-7')
+                                    .setValidators([Validators.required])
+                                    .onChange((value: any) => {
+                                        console.log(value);
+                                    })
+                            ])
+                            .setValidators([DynamicFormValidator.FieldMatch('password', 'confirm_password')])
+                        ,
+    
+                        new DynamicFormGroup('testx')
+                            .setGroupCssClass('col-xs-12 col-sm-4')
+                            .elements([
+                                new DynamicFormControl('enabled', 'Enabled'),
+                            ]),
+    
+                        new DynamicFormArray('testy')
+                            .setArrayCssClass('col-xs-12 col-sm-4')
+                            .elements([
+                                new DynamicFormControl('key', 'hir')
+                                    .wrapInGroup(),
+    
+                                new DynamicFormControl(null, 'KEY')
+                                    .setFormGroupCssClass('row'),
+                            ]),
+    
+                        new DynamicFormArray('generated')
+                            .setArrayCssClass('col-xs-12 col-sm-4')
+                            .setIsHidden(() => {
+                                console.log();
+                                return this.hide;
+                            })
+                            .generateElement(
+                                new DynamicFormControl(null, 'VAL')
+                                    .onChange((value) => {
+                                        console.log(value);
+                                    })
+                                    .setIsRemovable()
+                            )
+                            .enableInteraction()
+                            .setMaxElements(5)
+    
+                    ])
+            ]);
+            
+            // And then set your data like so:
+            
+                this.fg.patchValue({
+                    test: {
+                        domain: 'example.com',
+                        admin: {
+                            username: 'someUser',
+                        },
+                        testx: {
+                            enabled: 'este'
+                        },
+                        testy: [
+                            {key: 'awdawd'},
+                            'zzzzzzz'
+                        ],
+                        generated: [
+                            30, 40, 50
+                        ]
+                    }
+                });
+ 
+ 
+ The config should always mirror your data structure.
+ 
+ This was build using TBS3 in mind, however this will be removed by default so you'll be able to use whatever is needed.
+ 
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

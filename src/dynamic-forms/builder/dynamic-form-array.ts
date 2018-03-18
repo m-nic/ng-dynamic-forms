@@ -29,11 +29,14 @@ export class DynamicFormArray extends FormArray {
         return this;
     }
 
-    patchValue(value: any, options?: Object) {
+    patchValue(value: any, options?: {
+        onlySelf?: boolean;
+        emitEvent?: boolean;
+    }) {
 
         if (this.elementGenerate) {
             this.controls = [];
-            for (let i in value) {
+            for (const i in value) {
                 if (value.hasOwnProperty(i)) {
                     this.addElement(Object.create(this.elementGenerate));
                 }
@@ -91,7 +94,7 @@ export class DynamicFormArray extends FormArray {
         return this.maxElements === this.controls.length;
     }
 
-    setValidators(newValidator: ValidatorFn | ValidatorFn[] | null){
+    setValidators(newValidator: ValidatorFn | ValidatorFn[] | null) {
         super.setValidators(newValidator);
         return this;
     }

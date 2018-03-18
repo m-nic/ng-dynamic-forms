@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DynamicFormGroup } from './dynamic-forms/builder/dynamic-form-group';
-import { DynamicFormControl } from './dynamic-forms/builder/dynamic-form-control';
-import { DynamicFormArray } from './dynamic-forms/builder/dynamic-form-array';
-import { DynamicFormComponent } from './dynamic-forms/dynamic-form.component';
+import { DynamicFormGroup } from '../dynamic-forms/builder/dynamic-form-group';
+import { DynamicFormControl } from '../dynamic-forms/builder/dynamic-form-control';
+import { DynamicFormArray } from '../dynamic-forms/builder/dynamic-form-array';
+import { DynamicFormComponent } from '../dynamic-forms/dynamic-form.component';
 import { CustomFormDisplayComponent } from './custom-form-display.component';
-import { DynamicFormValidator } from './dynamic-forms/validation/dynamic-form.validator';
+import { DynamicFormValidator } from '../dynamic-forms/validation/dynamic-form.validator';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
         // .setControlCssClass('col-xs-12 col-sm-7');
 
         this.fg = new DynamicFormGroup().elements([
-            new DynamicFormGroup('network')
+            new DynamicFormGroup('test')
                 .elements([
 
                     new DynamicFormControl('domain', 'Domain')
@@ -107,8 +107,8 @@ export class AppComponent implements OnInit {
         ]);
 
         this.fg.patchValue({
-            network: {
-                domain: 'test.ceva',
+            test: {
+                domain: 'example.com',
                 admin: {
                     username: 'someUser',
                 },
