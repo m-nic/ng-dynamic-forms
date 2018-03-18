@@ -1,6 +1,7 @@
 import { AbstractControl, FormControl } from '@angular/forms';
 import { DynamicFormControl } from '../builder/dynamic-form-control';
 
+// @dynamic
 export class DynamicFormValidator {
 
     static getValidatorMessage(errorName: string, error?: any) {
@@ -8,7 +9,7 @@ export class DynamicFormValidator {
         if (error.customMessage) {
             return error.customMessage;
         } else {
-            let errorMessages = {
+            const errorMessages = {
                 'required': 'This field is required',
                 'minlength': 'You need to enter more than %s characters'
                     .replace('%s', error['requiredLength']),
@@ -44,7 +45,7 @@ export class DynamicFormValidator {
     }
 
     static hostnameValidator(input: FormControl) {
-        let ipV4Regex = /^(?!\-)(?:\*\.)?(?:[a-zA-Z\d\-]{0,62}[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z-\d]{2,63}$/i;
+        const ipV4Regex = /^(?!\-)(?:\*\.)?(?:[a-zA-Z\d\-]{0,62}[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z-\d]{2,63}$/i;
         if (!input.value || ipV4Regex.test(input.value)) {
             return null;
         }
@@ -55,7 +56,7 @@ export class DynamicFormValidator {
     }
 
     static IpV4Validator(input: FormControl) {
-        let ipV4Regex = /^(?=.*[^\.]$)((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.?){4}$/;
+        const ipV4Regex = /^(?=.*[^\.]$)((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.?){4}$/;
         if (!input.value || ipV4Regex.test(input.value)) {
             return null;
         }
@@ -67,7 +68,7 @@ export class DynamicFormValidator {
 
 
     static IpV4RangeValidator(input: FormControl) {
-        let ipV4RangeRegex = /^(?=.*[^\.]$)((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.?){4}\-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+        const ipV4RangeRegex = /^(?=.*[^\.]$)((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.?){4}\-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (!input.value || ipV4RangeRegex.test(input.value)) {
             return null;
         }
@@ -81,11 +82,11 @@ export class DynamicFormValidator {
 
         return (AC: AbstractControl) => {
 
-            let field1Control = AC.get(field1) as DynamicFormControl;
-            let field2Control = AC.get(field2) as DynamicFormControl;
+            const field1Control = AC.get(field1) as DynamicFormControl;
+            const field2Control = AC.get(field2) as DynamicFormControl;
 
-            let value1 = field1Control.value;
-            let value2 = field2Control.value;
+            const value1 = field1Control.value;
+            const value2 = field2Control.value;
 
             if (!message) {
                 message = "'%f2' should match '%f1'"
