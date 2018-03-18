@@ -1,7 +1,6 @@
 # DynamicFroms
 
-This project was started due to the need of easily generating forms in a dynamic way.
-It' still under active development and will be soon published on npm
+This project was started due to the need of easily generating forms in a dynamic way using Angular.
 
 # Instalation
     npm i --save ngx-dynamic-forms
