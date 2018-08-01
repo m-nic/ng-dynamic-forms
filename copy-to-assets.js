@@ -10,11 +10,12 @@ var deps = [
     {
         from: './node_modules/bootstrap/dist/**',
         to: assetsPath + '/bootstrap/'
-    },
-    {
-        from: './node_modules/vanilla-text-mask/dist/vanillaTextMask.js',
-        to: assetsPath + '/vanillaTextMask'
     }
+    // ,
+    // {
+    //     from: './node_modules/vanilla-text-mask/dist/vanillaTextMask.js',
+    //     to: assetsPath + '/vanillaTextMask'
+    // }
 ];
 
 

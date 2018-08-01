@@ -1,18 +1,18 @@
-import { FormControl, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/map';
+import {FormControl, ValidatorFn, AsyncValidatorFn} from "@angular/forms";
+import {debounceTime} from "rxjs/operators";
+
 
 export class DynamicFormControl extends FormControl {
 
     public static readonly DEFAULT_DEBOUNCE = 200;
 
-    public static readonly TYPE_HIDDEN = 'hidden';
-    public static readonly TYPE_TEXT = 'text';
-    public static readonly TYPE_PASSWORD = 'password';
-    public static readonly TYPE_CHECKBOX = 'checkbox';
-    public static readonly TYPE_SLIDER = 'slider_checkbox';
-    public static readonly TYPE_TEXTAREA = 'textarea';
-    public static readonly TYPE_FILE = 'file';
+    public static readonly TYPE_HIDDEN = "hidden";
+    public static readonly TYPE_TEXT = "text";
+    public static readonly TYPE_PASSWORD = "password";
+    public static readonly TYPE_CHECKBOX = "checkbox";
+    public static readonly TYPE_SLIDER = "slider_checkbox";
+    public static readonly TYPE_TEXTAREA = "textarea";
+    public static readonly TYPE_FILE = "file";
 
     public textMask: (string | RegExp)[] = [];
     public groupWrap: boolean;
@@ -20,11 +20,11 @@ export class DynamicFormControl extends FormControl {
 
     public enableTextToggle: boolean = false;
 
-    public placeholder: string = '';
+    public placeholder: string = "";
     public renderer: any;
 
-    public dividerTopCssClass: string = '';
-    public dividerBottomCssClass: string = '';
+    public dividerTopCssClass: string = "";
+    public dividerBottomCssClass: string = "";
 
     public formGroupCssClass: string;
     public labelCssClass: string;
@@ -49,7 +49,9 @@ export class DynamicFormControl extends FormControl {
         super(formState, validator, asyncValidator);
 
         this.valueChanges
-            .debounceTime(DynamicFormControl.DEFAULT_DEBOUNCE)
+            .pipe(
+                debounceTime(DynamicFormControl.DEFAULT_DEBOUNCE)
+            )
             .subscribe((value: any) => {
                 if (this.onChangeHandler instanceof Function) {
                     this.onChangeHandler(value, this, this.parent);
@@ -113,7 +115,7 @@ export class DynamicFormControl extends FormControl {
 
     setDividerTop(cssClass?: string) {
         if (!cssClass) {
-            cssClass = 'col-xs-12';
+            cssClass = "col-xs-12";
         }
         this.dividerTopCssClass = cssClass;
 
@@ -123,7 +125,7 @@ export class DynamicFormControl extends FormControl {
 
     setDividerBottom(cssClass?: string) {
         if (!cssClass) {
-            cssClass = 'col-xs-12';
+            cssClass = "col-xs-12";
         }
         this.dividerBottomCssClass = cssClass;
 
@@ -140,7 +142,7 @@ export class DynamicFormControl extends FormControl {
         return this;
     }
 
-    setValidators(newValidator: ValidatorFn | ValidatorFn[] | null){
+    setValidators(newValidator: ValidatorFn | ValidatorFn[] | null) {
         super.setValidators(newValidator);
         return this;
     }
