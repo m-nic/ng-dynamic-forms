@@ -15,15 +15,15 @@ export class DynamicFormGroupComponent {
         public dynamicFormService: DynamicFormService) {
     }
 
-    private isFormGroup(group: any) {
+    public isFormGroup(group: any) {
         return group instanceof DynamicFormGroup;
     }
 
-    private isFormArray(array: any) {
+    public isFormArray(array: any) {
         return array instanceof DynamicFormArray;
     }
 
-    private isControl(control: any) {
+    public isControl(control: any) {
         if (control instanceof DynamicFormControl) {
             this.dynamicFormService.addElementReference(control);
             return true;
